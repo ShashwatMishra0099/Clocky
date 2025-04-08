@@ -1,35 +1,28 @@
-// Background Selection Functionality - always show the modal on page load
-document.addEventListener('DOMContentLoaded', () => {
-  // Always display the modal (do not check storage)
-  document.getElementById('bgModal').style.display = 'flex';
-
-  // Add click listeners for all background option buttons
-  const bgOptions = document.querySelectorAll('.bg-option');
-  bgOptions.forEach(option => {
-    option.addEventListener('click', () => {
-      const bgClass = option.getAttribute('data-bg');
-      // Apply the selected gradient class to body, fullscreen timer, and time-up screen
-      document.body.classList.remove('bg-gradient-purple', 'bg-gradient-blue', 'bg-gradient-red', 'bg-gradient-green', 'bg-gradient-grey');
-      document.body.classList.add(bgClass);
-
-      document.getElementById('fullscreen').classList.remove('bg-gradient-purple', 'bg-gradient-blue', 'bg-gradient-red', 'bg-gradient-green', 'bg-gradient-grey');
-      document.getElementById('fullscreen').classList.add(bgClass);
-
-      document.getElementById('timeUpScreen').classList.remove('bg-gradient-purple', 'bg-gradient-blue', 'bg-gradient-red', 'bg-gradient-green', 'bg-gradient-grey');
-      document.getElementById('timeUpScreen').classList.add(bgClass);
-
-      // Hide the modal after selection
-      document.getElementById('bgModal').style.display = 'none';
-    });
-  });
-});
-
-// Timer Functionality
 let hours = 0, minutes = 0, seconds = 0;
 let totalSeconds = 0;
 let timer;
 let isRunning = false;
+// Global background mode variable ("default" or "modern")
+// Until the user selects, it remains empty.
+let backgroundMode = '';
 let alarm = document.getElementById('alarmSound');
+
+// Function to set background mode (triggered by the popup buttons)
+function setBackground(mode) {
+  backgroundMode = mode;
+  document.getElementById('backgroundPopup').style.display = 'none';
+  const fullscreenTimer = document.getElementById('fullscreen');
+  const bgVideo = document.getElementById('bgVideo');
+  if (mode === 'modern') {
+    fullscreenTimer.classList.add('modern');
+    bgVideo.currentTime = 0;
+    bgVideo.play();
+  } else {
+    fullscreenTimer.classList.remove('modern');
+    bgVideo.pause();
+    bgVideo.currentTime = 0;
+  }
+}
 
 function adjustTime(unit, amount) {
   if (unit === 'hours') hours = Math.max(0, hours + amount);
@@ -44,17 +37,30 @@ function updateDisplay() {
   document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
 }
 
+// Modified startTimer now checks for the background mode selection.
 function startTimer() {
   if (isRunning) return;
+  // Ensure a background mode has been chosen before starting.
+  if (backgroundMode === '') {
+    // Do nothing if the user hasn't selected a mode.
+    return;
+  }
   isRunning = true;
-
   totalSeconds = hours * 3600 + minutes * 60 + seconds;
   if (totalSeconds <= 0) return;
-
+  
   enterFullScreen();
   document.getElementById('fullscreen').classList.add('active');
-  document.getElementById('countdown').textContent = formatTime(totalSeconds);
 
+  // Play video in modern mode if selected
+  if (backgroundMode === 'modern') {
+    const bgVideo = document.getElementById('bgVideo');
+    // Ensure the video plays from the beginning.
+    bgVideo.currentTime = 0;
+    bgVideo.play();
+  }
+  
+  document.getElementById('countdown').textContent = formatTime(totalSeconds);
   timer = setInterval(() => {
     if (totalSeconds <= 0) {
       clearInterval(timer);
@@ -108,11 +114,11 @@ function enterFullScreen() {
   let elem = document.documentElement; // Makes entire page go full-screen
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) {
+  } else if (elem.mozRequestFullScreen) { // Firefox
     elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) {
+  } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera
     elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) {
+  } else if (elem.msRequestFullscreen) { // IE/Edge
     elem.msRequestFullscreen();
   }
 }
@@ -120,11 +126,11 @@ function enterFullScreen() {
 function exitFullScreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
-  } else if (document.mozCancelFullScreen) {
+  } else if (document.mozCancelFullScreen) { // Firefox
     document.mozCancelFullScreen();
-  } else if (document.webkitExitFullscreen) {
+  } else if (document.webkitExitFullscreen) { // Chrome, Safari, Opera
     document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) {
+  } else if (document.msExitFullscreen) { // IE/Edge
     document.msExitFullscreen();
   }
 }
