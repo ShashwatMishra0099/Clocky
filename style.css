@@ -60,15 +60,14 @@ span {
   box-shadow: 0 0 10px #8a2be2, 0 0 20px #9400d3;
 }
 
-/* Fullscreen timer & Time's Up Screen */
-/* Their default background properties will be overridden when a gradient class is applied */
-.fullscreen-timer,
-.time-up-screen {
+/* Fullscreen Timer */
+.fullscreen-timer {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
+  background: radial-gradient(circle, rgba(50,0,80,1) 0%, rgba(0,0,0,1) 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,11 +76,25 @@ span {
   transition: opacity 1s ease-in-out;
 }
 
-/* When active, show the element */
-.fullscreen-timer.active,
-.time-up-screen.active {
+.fullscreen-timer.active {
   visibility: visible;
   opacity: 1;
+}
+
+/* Video Background: hidden by default; shown in modern mode */
+.fullscreen-timer video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  display: none;
+}
+
+.fullscreen-timer.modern video {
+  display: block;
 }
 
 .countdown-display {
@@ -98,6 +111,28 @@ span {
   100% {
     text-shadow: 0 0 30px #8a2be2, 0 0 60px #9400d3;
   }
+}
+
+/* Time's Up Screen */
+.time-up-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(circle, rgba(150,0,0,1) 0%, rgba(50,0,0,1) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.time-up-screen.active {
+  visibility: visible;
+  opacity: 1;
 }
 
 .time-up-text {
@@ -127,63 +162,46 @@ span {
   box-shadow: 0 0 15px red, 0 0 30px darkred;
 }
 
-/* Gradient Background Classes (applied to body, fullscreen-timer, and timeUpScreen) */
-.bg-gradient-purple {
-  background: radial-gradient(circle, rgba(50,0,80,1) 0%, rgba(0,0,0,1) 100%) !important;
-}
-.bg-gradient-blue {
-  background: radial-gradient(circle, rgba(0,0,80,1) 0%, rgba(0,0,0,1) 100%) !important;
-}
-.bg-gradient-red {
-  background: radial-gradient(circle, rgba(80,0,0,1) 0%, rgba(0,0,0,1) 100%) !important;
-}
-.bg-gradient-green {
-  background: radial-gradient(circle, rgba(0,80,0,1) 0%, rgba(0,0,0,1) 100%) !important;
-}
-.bg-gradient-grey {
-  background: linear-gradient(135deg, #2c3e50, #000000) !important;
-}
-
-/* Modal Styles for Background Selection */
-.modal {
+/* Background Mode Popup Styles */
+.background-popup {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: none;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 200;
 }
 
-.modal-content {
-  background: #1a1a1a;
-  padding: 20px;
+.popup-content {
+  background: #1c1c1c;
+  padding: 30px;
   border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
   text-align: center;
-  max-width: 90%;
 }
 
-.gradient-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 20px;
+.popup-content h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
 }
 
-.bg-option {
-  width: 50px;
-  height: 50px;
-  border: none;
+.popup-btn {
+  margin: 0 10px;
+  font-size: 1.2rem;
   cursor: pointer;
-  border-radius: 5px;
-  outline: none;
-  transition: transform 0.2s;
+  border: 2px solid #8a2be2;
+  background: transparent;
+  color: #fff;
+  padding: 10px 20px;
+  transition: 0.3s ease-in-out;
+  text-transform: uppercase;
 }
 
-.bg-option:hover {
-  transform: scale(1.1);
+.popup-btn:hover {
+  background: #8a2be2;
+  box-shadow: 0 0 10px #8a2be2, 0 0 20px #9400d3;
 }
