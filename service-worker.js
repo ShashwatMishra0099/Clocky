@@ -5,7 +5,8 @@ const ASSETS = [
     "/style.css",
     "/script.js",
     "/service-worker.js",
-    "/sweet.mp3"
+    "/sweet.mp3",
+    "/video.mp4"
 ];
 
 // Install Service Worker and Cache Files
