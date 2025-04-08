@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+body {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Background Gradient Options (applied via JS) */
+.bg-gradient-purple {
+  background: radial-gradient(circle, rgba(50,0,80,1) 0%, rgba(0,0,0,1) 100%) !important;
+}
+.bg-gradient-blue {
+  background: radial-gradient(circle, rgba(0,0,80,1) 0%, rgba(0,0,0,1) 100%) !important;
+}
+.bg-gradient-red {
+  background: radial-gradient(circle, rgba(80,0,0,1) 0%, rgba(0,0,0,1) 100%) !important;
+}
+.bg-gradient-green {
+  background: radial-gradient(circle, rgba(0,80,0,1) 0%, rgba(0,0,0,1) 100%) !important;
+}
+.bg-gradient-grey {
+  background: linear-gradient(135deg, #2c3e50, #000000) !important;
+}
+
+.container {
+  margin-top: 10%;
+}
+
+.title {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px #8a2be2, 0 0 20px #9400d3;
+}
+
+.timer-setup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin: 20px 0;
+}
+
+.time-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+span {
+  font-size: 3rem;
+  margin: 10px 0;
+  text-shadow: 0 0 10px #8a2be2;
+}
+
+.colon {
+  font-size: 3rem;
+  margin: 0 15px;
+}
+
+.btn {
+  background: transparent;
+  border: 2px solid #8a2be2;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  text-transform: uppercase;
+}
+
+.btn:hover {
+  background: #8a2be2;
+  box-shadow: 0 0 10px #8a2be2, 0 0 20px #9400d3;
+}
+
+.fullscreen-timer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(circle, rgba(50,0,80,1) 0%, rgba(0,0,0,1) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.fullscreen-timer.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.countdown-display {
+  font-size: 6rem;
+  color: #fff;
+  text-shadow: 0 0 15px #8a2be2, 0 0 30px #9400d3;
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    text-shadow: 0 0 15px #8a2be2, 0 0 30px #9400d3;
+  }
+  100% {
+    text-shadow: 0 0 30px #8a2be2, 0 0 60px #9400d3;
+  }
+}
+
+/* TIME'S UP SCREEN */
+.time-up-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(circle, rgba(150,0,0,1) 0%, rgba(50,0,0,1) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.time-up-screen.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.time-up-text {
+  font-size: 6rem;
+  color: #fff;
+  text-shadow: 0 0 20px red, 0 0 40px darkred;
+  animation: flicker 1s infinite alternate;
+}
+
+@keyframes flicker {
+  0% {
+    text-shadow: 0 0 20px red, 0 0 40px darkred;
+  }
+  100% {
+    text-shadow: 0 0 40px red, 0 0 80px darkred;
+  }
+}
+
+.home-btn {
+  margin-top: 20px;
+  border-color: red;
+  font-size: 1.5rem;
+}
+
+.home-btn:hover {
+  background: red;
+  box-shadow: 0 0 15px red, 0 0 30px darkred;
+}
+
+/* Modal Styles for Background Selection */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none; /* Hidden by default, shown via JS */
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 90%;
+}
+
+.gradient-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.bg-option {
+  width: 50px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  outline: none;
+  transition: transform 0.2s;
+}
+
+.bg-option:hover {
+  transform: scale(1.1);
+}
