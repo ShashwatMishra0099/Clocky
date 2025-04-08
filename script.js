@@ -1,24 +1,36 @@
 // Background Selection Functionality
 document.addEventListener('DOMContentLoaded', () => {
-  // Check if a background was previously selected and apply it
+  // Check if a background was previously selected
   const savedBg = localStorage.getItem('selectedBackground');
   if (savedBg) {
+    // Remove any preset background classes and apply the saved one to body, fullscreen timer, and time-up screen
     document.body.classList.remove('bg-gradient-purple', 'bg-gradient-blue', 'bg-gradient-red', 'bg-gradient-green', 'bg-gradient-grey');
     document.body.classList.add(savedBg);
+    document.getElementById('fullscreen').classList.remove('bg-gradient-purple', 'bg-gradient-blue', 'bg-gradient-red', 'bg-gradient-green', 'bg-gradient-grey');
+    document.getElementById('fullscreen').classList.add(savedBg);
+    document.getElementById('timeUpScreen').classList.remove('bg-gradient-purple', 'bg-gradient-blue', 'bg-gradient-red', 'bg-gradient-green', 'bg-gradient-grey');
+    document.getElementById('timeUpScreen').classList.add(savedBg);
   } else {
-    // No selection found; show the modal popup
+    // Show the modal if no selection exists
     document.getElementById('bgModal').style.display = 'flex';
   }
 
-  // Add click listeners for background option buttons
+  // Add click listeners for all background option buttons
   const bgOptions = document.querySelectorAll('.bg-option');
   bgOptions.forEach(option => {
     option.addEventListener('click', () => {
       const bgClass = option.getAttribute('data-bg');
-      // Remove any previous background classes and apply the selected one
+      // Remove any previous background classes and apply the selected one to all target elements
       document.body.classList.remove('bg-gradient-purple', 'bg-gradient-blue', 'bg-gradient-red', 'bg-gradient-green', 'bg-gradient-grey');
       document.body.classList.add(bgClass);
-      // Save the selection so the modal doesn't show again
+      
+      document.getElementById('fullscreen').classList.remove('bg-gradient-purple', 'bg-gradient-blue', 'bg-gradient-red', 'bg-gradient-green', 'bg-gradient-grey');
+      document.getElementById('fullscreen').classList.add(bgClass);
+      
+      document.getElementById('timeUpScreen').classList.remove('bg-gradient-purple', 'bg-gradient-blue', 'bg-gradient-red', 'bg-gradient-green', 'bg-gradient-grey');
+      document.getElementById('timeUpScreen').classList.add(bgClass);
+      
+      // Save the selection in localStorage so the modal doesn't show again
       localStorage.setItem('selectedBackground', bgClass);
       // Hide the modal
       document.getElementById('bgModal').style.display = 'none';
@@ -26,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Timer and Fullscreen Code
+// Existing Timer Functionality
 let hours = 0, minutes = 0, seconds = 0;
 let totalSeconds = 0;
 let timer;
@@ -49,7 +61,7 @@ function updateDisplay() {
 function startTimer() {
   if (isRunning) return;
   isRunning = true;
-
+  
   totalSeconds = hours * 3600 + minutes * 60 + seconds;
   if (totalSeconds <= 0) return;
 
@@ -107,7 +119,7 @@ function formatTime(totalSeconds) {
 
 // Fullscreen Functions
 function enterFullScreen() {
-  let elem = document.documentElement;
+  let elem = document.documentElement; // Makes entire page go full-screen
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
   } else if (elem.mozRequestFullScreen) {
