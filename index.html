@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Countdown Timer</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker Registered'))
+        .catch(err => console.error('Service Worker Registration Failed', err));
+    }
+  </script>
+</head>
+<body>
+  <div class="container" id="mainContainer">
+    <h1 class="title">Countdown Timer</h1>
+    <div class="timer-setup">
+      <div class="time-box">
+        <button class="btn adjust-btn" onclick="adjustTime('hours', 1)">+</button>
+        <span id="hours">00</span>
+        <button class="btn adjust-btn" onclick="adjustTime('hours', -1)">-</button>
+      </div>
+      <span class="colon">:</span>
+      <div class="time-box">
+        <button class="btn adjust-btn" onclick="adjustTime('minutes', 1)">+</button>
+        <span id="minutes">00</span>
+        <button class="btn adjust-btn" onclick="adjustTime('minutes', -1)">-</button>
+      </div>
+      <span class="colon">:</span>
+      <div class="time-box">
+        <button class="btn adjust-btn" onclick="adjustTime('seconds', 1)">+</button>
+        <span id="seconds">00</span>
+        <button class="btn adjust-btn" onclick="adjustTime('seconds', -1)">-</button>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn start-btn" onclick="startTimer()">Start</button>
+      <button class="btn stop-btn" onclick="stopTimer()">Stop</button>
+      <button class="btn reset-btn" onclick="resetTimer()">Reset</button>
+    </div>
+  </div>
+
+  <div class="fullscreen-timer" id="fullscreen">
+    <div class="countdown-display" id="countdown">00:00:00</div>
+  </div>
+
+  <div class="time-up-screen" id="timeUpScreen">
+    <h1 class="time-up-text">TIME'S UP!</h1>
+    <button class="btn home-btn" onclick="returnHome()">Home</button>
+    <audio id="alarmSound" loop>
+      <source src="sweet.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <!-- Background Selection Modal -->
+  <div id="bgModal" class="modal">
+    <div class="modal-content">
+      <h2>Select Background Gradient</h2>
+      <div class="gradient-options">
+        <button class="bg-option" data-bg="bg-gradient-purple" style="background: radial-gradient(circle, rgba(50,0,80,1) 0%, rgba(0,0,0,1) 100%);"></button>
+        <button class="bg-option" data-bg="bg-gradient-blue" style="background: radial-gradient(circle, rgba(0,0,80,1) 0%, rgba(0,0,0,1) 100%);"></button>
+        <button class="bg-option" data-bg="bg-gradient-red" style="background: radial-gradient(circle, rgba(80,0,0,1) 0%, rgba(0,0,0,1) 100%);"></button>
+        <button class="bg-option" data-bg="bg-gradient-green" style="background: radial-gradient(circle, rgba(0,80,0,1) 0%, rgba(0,0,0,1) 100%);"></button>
+        <button class="bg-option" data-bg="bg-gradient-grey" style="background: linear-gradient(135deg, #2c3e50, #000000);"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
